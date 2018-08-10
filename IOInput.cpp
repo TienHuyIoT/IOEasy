@@ -7,7 +7,7 @@
 #define IOINPUT_DBG(fmt, ...) //IOINPUT_PORT.printf("\r\n>IOINPUT< " fmt, ##__VA_ARGS__)
 
 IOInput::IOInput(short _IO, uint8_t Lever, uint16_t S_To, uint16_t H_Cnt, uint16_t L_Cnt)
-    : ToE(100), _IOPIN(_IO), flagInput(Lever), SampleTo(S_To), SampleHigh(H_Cnt), SampleLow(L_Cnt)
+    : ToE(100), _IOPIN(_IO), State(Lever), SampleTo(S_To), SampleHigh(H_Cnt), SampleLow(L_Cnt)
 {
   pinMode(_IOPIN, INPUT_PULLUP);
 }
@@ -22,7 +22,8 @@ void IOInput::loop(void)
     LowCount++;
     if (LowCount == SampleLow)
     {
-      flagInput = LOW;
+      if(State == HIGH) Edge = FALLING;
+	  State = LOW;
       LowTime = millis();
       IOINPUT_DBG("%u: LOW",_IOPIN);
     }
@@ -37,7 +38,8 @@ void IOInput::loop(void)
     HighCount++;
     if (HighCount == SampleHigh)
     {
-      flagInput = HIGH;
+      if(State == LOW) Edge = RISING;
+	  State = HIGH;
       HighTime = millis();
       IOINPUT_DBG("%u: HIGH",_IOPIN);
     }
@@ -51,9 +53,9 @@ void IOInput::loop(void)
 
 uint32_t IOInput::GetTime(uint8_t Lever)
 {
-  if (Lever == flagInput)
+  if (Lever == State)
   {
-    if (flagInput == HIGH)
+    if (State == HIGH)
       return (millis() - HighTime);
     else
       return (millis() - LowTime);
@@ -62,9 +64,19 @@ uint32_t IOInput::GetTime(uint8_t Lever)
     return 0;
 }
 
+uint8_t IOInput::GetEdge(uint8_t Edge)
+{
+	uint8_t Ed = 0;
+	if(this->Edge == Edge){
+		Ed = 1;
+		this->Edge = State;
+	}
+	return Ed;
+}
+
 uint8_t IOInput::GetStatus(void)
 {
-  return flagInput;
+  return State;
 }
 
 void IOInput::set_high_cnt_ms(uint16_t High)
@@ -79,7 +91,7 @@ void IOInput::set_low_cnt_ms(uint16_t Low)
 
 void IOInput::set_status_init(uint8_t St)
 {
-  flagInput = St;
+  State = St;
 }
 
 void IOInput::set_sample_ms(uint16_t Sp)
