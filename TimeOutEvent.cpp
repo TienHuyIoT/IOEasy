@@ -33,3 +33,10 @@ void TimeOutEvent::ToEDisable(void){
 bool TimeOutEvent::ToEGetStatus(void){
   return this->En;
 }
+
+uint32_t TimeOutEvent::ToERemain(void) {
+  if(this->En == 0) return 0; 
+  uint32_t Rm = millis();
+  if(Rm > (this->TSta + this->Tio)) return 0;
+  return (this->TSta + this->Tio - Rm);
+}
