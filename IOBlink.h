@@ -29,6 +29,8 @@ class IOBlink : public TimeOutEvent {
 public:
 	IOBlink(short _IO = 2, bool Lever = LOW);
 	void attach_ms(uint8_t Count, uint16_t DelayOn, uint16_t DelayOff);
+	void On(void);
+	void Off(void);
 	void Blink(void);	
 
 protected:

@@ -22,6 +22,20 @@ void IOBlink::attach_ms(uint8_t Count, uint16_t DelayOn, uint16_t DelayOff)
   IoBDelayOn = DelayOn;
 }
 
+void IOBlink::On(void)
+{
+	IoBCount = 0;
+	TaskIoB = TaskIoBStop;
+	digitalWrite(_IOPIN, On_Status);
+}
+
+void IOBlink::Off(void)
+{
+	IoBCount = 0;
+	TaskIoB = TaskIoBStop;
+	digitalWrite(_IOPIN, Off_Status);
+}
+
 void IOBlink::Blink(void)
 {
   switch (TaskIoB) {
