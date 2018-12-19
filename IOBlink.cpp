@@ -36,6 +36,10 @@ void IOBlink::Off(void)
 	digitalWrite(_IOPIN, Off_Status);
 }
 
+uint8_t IOBlink::CountRemain(void){
+	return IoBCount;
+}
+
 void IOBlink::Blink(void)
 {
   switch (TaskIoB) {
