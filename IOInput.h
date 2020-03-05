@@ -65,11 +65,11 @@ void loop() {
 #include <stddef.h>
 #include "TimeOutEvent.h"
 
-#ifndef RISING
-#define RISING	2
+#ifndef IO_RISING
+#define IO_RISING	2
 #endif
-#ifndef FALLING
-#define FALLING	3
+#ifndef IO_FALLING
+#define IO_FALLING	3
 #endif
 
 class IOInput
@@ -96,7 +96,7 @@ class IOInput
 	uint16_t SampleLow = 10;
 	uint16_t SampleTo = 10;		
 	uint8_t State = HIGH;
-	uint8_t Edge;
+	uint8_t _Edge;
 	const short _IOPIN;
 	TimeOutEvent ToE;
 };

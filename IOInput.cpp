@@ -22,7 +22,7 @@ void IOInput::loop(void)
     LowCount++;
     if (LowCount == SampleLow)
     {
-      if(State == HIGH) Edge = FALLING;
+      if(State == HIGH) _Edge = IO_FALLING;
 	  State = LOW;
       LowTime = millis();
       IOINPUT_DBG("%u: LOW",_IOPIN);
@@ -38,7 +38,7 @@ void IOInput::loop(void)
     HighCount++;
     if (HighCount == SampleHigh)
     {
-      if(State == LOW) Edge = RISING;
+      if(State == LOW) _Edge = IO_RISING;
 	  State = HIGH;
       HighTime = millis();
       IOINPUT_DBG("%u: HIGH",_IOPIN);
@@ -67,9 +67,9 @@ uint32_t IOInput::GetTime(uint8_t Lever)
 uint8_t IOInput::GetEdge(uint8_t Edge)
 {
 	uint8_t Ed = 0;
-	if(this->Edge == Edge){
+	if(_Edge == Edge){
 		Ed = 1;
-		this->Edge = State;
+		_Edge = State;
 	}
 	return Ed;
 }

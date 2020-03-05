@@ -33,6 +33,7 @@ public:
   void On(void);
   void Off(void);
   void Blink(void); 
+  uint8_t CountRemain(void);
 
 protected:
   void (*Ft_On)(void);

@@ -37,6 +37,10 @@ void FTBlink::Off(void)
   Ft_Off();
 }
 
+uint8_t FTBlink::CountRemain(void){
+	return FTBCount;
+}
+
 void FTBlink::Blink(void)
 {
   switch (TaskFtB) {

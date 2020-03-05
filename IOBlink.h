@@ -31,7 +31,7 @@ public:
 	void attach_ms(uint8_t Count, uint16_t DelayOn, uint16_t DelayOff);
 	void On(void);
 	void Off(void);
-	void Blink(void);	
+	void Blink(void);
 	uint8_t CountRemain(void);
 
 protected:
